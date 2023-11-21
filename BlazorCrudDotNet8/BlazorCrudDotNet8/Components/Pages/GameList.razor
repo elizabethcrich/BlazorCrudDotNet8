@@ -1,6 +1,13 @@
 ﻿@page "/games"
 @inject IGameService GameService
+@inject NavigationManager NavigationManager
 @attribute [StreamRendering]
+@*  Render mode updated since tutorial recording. See here:
+    https://learn.microsoft.com/en-us/aspnet/core/blazor/components/render-modes?view=aspnetcore-8.0#apply-a-render-mode-to-a-component-definition
+    and here:
+    https://learn.microsoft.com/en-us/aspnet/core/blazor/components/render-modes?view=aspnetcore-8.0#prerendering
+*@
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <PageTitle>Games</PageTitle>
 
@@ -24,12 +31,19 @@ else
     </ul>
 }
 
+<button @onclick="CreateGame" class="btn btn-primary">Add Game</button>
+
 @code {
-    List<Game> games = null;
+    List<Game>? games = null;
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(500);//demo
         games = await GameService.GetAllGames();
+    }
+
+    void CreateGame()
+    {
+        NavigationManager.NavigateTo("/edit-game");
     }
 }
