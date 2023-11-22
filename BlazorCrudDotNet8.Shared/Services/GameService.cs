@@ -24,5 +24,22 @@ namespace BlazorCrudDotNet8.Shared.Services
         {
             return await _context.Games.ToListAsync();
         }
+
+        public async Task<Game> GetGameById(int? id)
+        {
+            return await _context.Games.FindAsync(id);
+        }
+
+        public async Task<Game> UpdateGame(int Id, Game game)
+        {
+            var dbGame = await _context.Games.FindAsync(Id);
+            if(dbGame != null)
+            {
+                dbGame.Name = game.Name;
+                await _context.SaveChangesAsync();
+                return dbGame;
+            }
+            throw new Exception(game.Name + " not found");
+        }
     }
 }
