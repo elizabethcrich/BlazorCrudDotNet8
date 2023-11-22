@@ -1,6 +1,6 @@
-﻿using BlazorCrudDotNet8.Entities;
+﻿using BlazorCrudDotNet8.Shared.Entities;
 
-namespace BlazorCrudDotNet8.Services
+namespace BlazorCrudDotNet8.Shared.Services
 {
     public interface IGameService
     {
